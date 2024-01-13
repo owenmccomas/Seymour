@@ -2,12 +2,11 @@ import speech_recognition as sr
 import serial
 import time
 
-# Setup the serial connection
 try:
-    arduino = serial.Serial('COM5', 9600)  # Replace 'COM5' with your actual COM port
-    time.sleep(2)  # Wait for the connection to be established
+    arduino = serial.Serial('COM5', 9600) 
+    time.sleep(2)
 except serial.SerialException:
-    print("Failed to connect to Arduino. Check your COM port.")
+    print("Failed to connect to Seymour. Check your COM port.")
     exit(1)
 
 def listen_for_commands():
@@ -28,9 +27,15 @@ def process_command(command):
     if 'wave' in command:
         try:
             arduino.write(b'wave\n')  # Sending the wave command
-            print("Sent wave command to Arduino")
+            print("Sent wave command to Seymour")
         except:
-            print("Failed to send command to Arduino")
+            print("Failed to send command to Seymour")
+    elif 'activate sentry mode' in command:
+        try:
+            arduino.write(b'sentry\n')  # Sending the sentry command
+            print("Sent sentry command to Seymour")
+        except:
+            print("Failed to send command to Seymour")
 
 
 while True:

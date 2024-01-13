@@ -24,9 +24,43 @@ void loop() {
       waveGesture(); // Execute the wave gesture
       Serial.println("Executing wave gesture");
     }
+    if (command == "sentry") {
+      sentryMode(); // Execute sentry mode
+      Serial.println("Executing wave gesture");
+    }
   }
 }
 
+
+void sentryMode() {
+  xArmServo startPositions[] = {
+    {1, 900},
+    {2, 500},
+    {3, 250},
+    {4, 600},
+    {5, 500},
+    {6, 100}
+  };
+
+  // Move servos to start positions
+  xarm.setPosition(startPositions, 6, 2000, true);
+
+  // Define the waving positions for each servo
+  xArmServo wavePositions[] = {
+    {1, 900},
+    {2, 500},
+    {3, 250},
+    {4, 600},
+    {5, 500},
+    {6, 550}
+  };
+
+  // Perform the wave gesture
+  for (int i = 0; i < 10; i++) { // Repeat waving motion 10 times
+    xarm.setPosition(wavePositions, 6, 5000, true);
+    xarm.setPosition(startPositions, 6, 5000, true);
+  }
+}
 
 
 
